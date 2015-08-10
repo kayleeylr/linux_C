@@ -203,7 +203,7 @@ void pthread_load(void *arg)//接受数据
 		exit(EXIT_SUCCESS);
 }
 
-void parse_input_buf( char *p ,send_info *send)
+void parse_input_buf( char *p ,send_info *send)//解析命令
 {
 		switch(p[0] ) {
 				case '>':
@@ -251,7 +251,12 @@ void writedata()//发送数据
 }
 
 
-
+int main(int argc ,char *argv[])
+{
+	inits();
+	close(socketfd);
+	return 0;
+}
 
 
 
