@@ -34,61 +34,62 @@ class Chat(object):
         recv = urllib2.urlopen(url).read()#获得html页面信息
         re_dict = json.loads(recv)	#把Json格式字符串解码转换成Python对象
         text = re_dict['text']
-        print 'it： ', text
+        print '小智： ', text
         self.get()
         
       
 
-db = {}
+
+save = {}
 def login():
     prompt = '用户名: '
     while True:
         name = raw_input(prompt)
-        if db.has_key(name):
+        if save.has_key(name):
             prompt = ': 用户名被注册，请重试'
             continue
         else:
             break
     pwd = raw_input('密码： ')
-    db[name] = pwd
+    save[name] = pwd
    
 def download():
     name = raw_input('用户名: ')
     pwd = raw_input('密码: ')
-    passwd = db.get(name)
+    passwd = save.get(name)
     if passwd == pwd:
         print '欢迎您', name
         chat = Chat()
-   	chat.init()
-   	chat.get()
+    	chat.init()
+    	chat.get()
     else:
         print '登陆失败!'
        
 def showmenu():
-    promt = """
+    menu = """
     		欢迎您
 ×××××××××××××××××××××××××××××××××
-	    (N)新用户注册
-	    (E)登陆
-	    (Q)退出
+	    (1)新用户注册
+	    (2)登陆
+	    (3)退出
       请输入选择: """
     done = False
     while not done:
         chosen = False
         while not chosen:
             try:
-                choice = raw_input(promt).strip()[0].lower()
+                choice = input(menu)
             except(EOFError, KeyboardInterrupt):
-                choice = 'q'
-            print '\n你选择了: [%s]' % choice
-            if choice not in 'neq':
+                choice = 3
+            if choice > 3 or choice <1:
                 print '输入错误，请重新输入!'
             else:
                 chosen = True
-        if choice == 'q':done = True
-        if choice == 'n':login()
-        if choice == 'e':download()
-       
+        if choice == 3:done = True
+        if choice == 1:login()
+        if choice == 2:download()
+        
+
 if __name__ == '__main__':
     showmenu()
 
